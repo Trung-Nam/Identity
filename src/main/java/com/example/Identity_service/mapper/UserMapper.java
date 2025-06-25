@@ -14,6 +14,7 @@ public interface UserMapper {
 //    @Mapping(source = "firstName",target = "lastName") // used it to map different field names
 //    @Mapping(target = "lastName", ignore = true) // used it to ignore a field
     UserResponse toUserResponse(User user);
+
     void updateUser(@MappingTarget User user, UserUpdateRequest request);
 
 }
