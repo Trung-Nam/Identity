@@ -15,9 +15,9 @@ public enum ErrorCode {
     UNAUTHENTICATED(1006, "User is not authenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "User is not authorized to perform this action", HttpStatus.FORBIDDEN)
     ;
-    private  int code;
-    private String message;
-    private HttpStatusCode statusCode;
+    private final   int code;
+    private final String message;
+    private final HttpStatusCode statusCode;
 
      ErrorCode(int code, String message, HttpStatusCode statusCode) {
         this.code = code;

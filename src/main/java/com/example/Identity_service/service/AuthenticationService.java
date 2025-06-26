@@ -24,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -110,7 +109,7 @@ public class AuthenticationService {
     private String buildScope(User user) {
         StringJoiner stringJoiner = new StringJoiner(" ");
         if (!CollectionUtils.isEmpty(user.getRoles())) {
-            user.getRoles().forEach(stringJoiner::add);
+//            user.getRoles().forEach(stringJoiner::add);
         }
         return stringJoiner.toString();
     }
