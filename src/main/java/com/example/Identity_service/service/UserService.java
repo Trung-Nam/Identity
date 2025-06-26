@@ -8,6 +8,7 @@ import com.example.Identity_service.enums.Role;
 import com.example.Identity_service.exception.AppException;
 import com.example.Identity_service.exception.ErrorCode;
 import com.example.Identity_service.mapper.UserMapper;
+import com.example.Identity_service.repository.RoleRepository;
 import com.example.Identity_service.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
     UserRepository userRepository;
+    RoleRepository roleRepository;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
@@ -45,6 +47,7 @@ public class UserService {
         return userMapper.toUserResponse(userRepository.save(user));
     }
     @PreAuthorize("hasRole('ADMIN')")
+//        @PostAuthorize("hasAnyAuthority('READ_USER')")
     public List<UserResponse> getAllUsers() {
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
     }
@@ -67,8 +70,16 @@ public class UserService {
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         userMapper.updateUser(user, request);
+        if (request.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(request.getPassword()));
+        }
+
+        var roles = roleRepository.findAllById(request.getRoles());
+        user.setRoles(new HashSet<>(roles));
+
 
         return userMapper.toUserResponse(userRepository.save(user));
+
     }
 
     public Boolean deleteUser(String id) {

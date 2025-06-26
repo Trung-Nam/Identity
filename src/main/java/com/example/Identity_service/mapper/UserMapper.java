@@ -5,6 +5,7 @@ import com.example.Identity_service.dto.request.UserUpdateRequest;
 import com.example.Identity_service.dto.response.UserResponse;
 import com.example.Identity_service.entity.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
@@ -14,6 +15,7 @@ public interface UserMapper {
 //    @Mapping(target = "lastName", ignore = true) // used it to ignore a field
     UserResponse toUserResponse(User user);
 
+    @Mapping(target = "roles", ignore = true) // Assuming roles are handled separately
     void updateUser(@MappingTarget User user, UserUpdateRequest request);
 
 }
