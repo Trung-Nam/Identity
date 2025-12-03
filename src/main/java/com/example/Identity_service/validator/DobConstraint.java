@@ -10,7 +10,7 @@ import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target({ FIELD })
-@Retention(RUNTIME)
+@Retention(RUNTIME) // xử lý lúc nào
 @Constraint(validatedBy = { DobValidator.class })
 public @interface DobConstraint {
     String message() default "Invalid date of birth";
